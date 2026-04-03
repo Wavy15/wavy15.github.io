@@ -66,6 +66,7 @@ body {
 <div class="terminal-box">
 
   <h1>&gt; Accueil<span class="cursor"></span></h1>
+  <H2>&gt; Bienvenue sur mon portfolio<span class="cursor"></span></h2>
 
   <p>Étudiant en cybersécurité web spécialisé en pentesting.</p>
 
