@@ -42,8 +42,8 @@
 
     .cursor {
       display: inline-block;
-      width: 10px;
-      height: 20px;
+      width: 100vw;
+      height: 100vw;
       background: #00ff00;
       margin-left: 5px;
       animation: blink 1s infinite;
