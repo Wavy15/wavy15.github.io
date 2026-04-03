@@ -21,11 +21,15 @@ body {
 
 /* Terminal box */
 .terminal-box {
+  width: 100vw;       /* largeur totale de la fenêtre */
+  height: 100vh;      /* hauteur totale de la fenêtre */
   border: 2px solid #00ff00;
-  padding: 30px;
   box-shadow: 0 0 20px #00ff00;
-  text-align: left;
-  max-width: 80%;
+  padding: 20px;      /* tu peux réduire pour que le texte ne soit pas compressé */
+  box-sizing: border-box;  /* inclut le padding et border dans la taille totale */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* ou center si tu veux centrer verticalement */
 }
 
 /* Curseur clignotant */
