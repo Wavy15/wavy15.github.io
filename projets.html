@@ -4,8 +4,90 @@
 <meta charset="UTF-8">
 <title>Projets</title>
 
-  <h1> Rapport bug bounty hors-scope</h1>
+<style>
+/* Full-screen body */
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
 
-  <h2>Faille détéctée : User-Enumeration + Dos mail </h2>
-  <h3> Voici le fichier en format PDF :</h3>
-  <a><button>href="Rapport User-Enumeration hors-scope.pdf" download class="btn"[télécharger le rapport PDF]</button></a>
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+  font-family: "Courier New", monospace;
+  color: #00ff00;
+}
+
+/* Terminal box */
+.terminal-box {
+  height: 100vh;
+  width: 90%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* centre verticalement */
+  align-items: center;     /* centre horizontalement */
+  border: 2px solid #00ff00;
+  box-shadow: 0 0 20px #00ff00;
+  text-align: center;
+}
+
+/* Curseur clignotant */
+.cursor {
+  display: inline-block;
+  width: 10px;
+  height: 20px;
+  background: #00ff00;
+  margin-left: 5px;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+/* Boutons style terminal */
+.btn {
+  display: block;
+  margin: 10px auto;
+  padding: 10px 20px;
+  color: #00ff00;
+  border: 1px solid #00ff00;
+  text-decoration: none;
+  transition: 0.3s;
+  width: fit-content;
+}
+
+.btn:hover {
+  background-color: #00ff00;
+  color: black;
+}
+</style>
+</head>
+
+<body>
+
+<div class="terminal-box">
+
+  <h1>&gt; Rapport bug bounty hors-scope<span class="cursor"></span></h1>
+  <h2>&gt; Faille détectée : User-Enumeration + DoS mail</h2>
+  <h3>&gt; Voici le fichier en format PDF :</h3>
+
+  <!-- Bouton de téléchargement PDF -->
+  <a href="Rapport User-Enumeration hors-scope.pdf" download class="btn">
+    [ Télécharger le rapport PDF ]
+  </a>
+
+  <p>&gt; Accéder aux autres pages :</p>
+  <a href="index.html" class="btn">[ Accueil ]</a>
+  <a href="competences.html" class="btn">[ Compétences ]</a>
+  <a href="profil.html" class="btn">[ Profil ]</a>
+
+</div>
+
+</body>
+</html>
