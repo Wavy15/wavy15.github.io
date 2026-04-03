@@ -7,16 +7,24 @@
 <style>
 /* Full-screen body */
 body {
-  background-color: black;
   margin: 0;
   padding: 0;
   height: 100vh;
   width: 100vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   font-family: "Courier New", monospace;
   color: #00ff00;
+  overflow: hidden;
+}
+
+/* Canvas Matrix */
+#matrix {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  background: black;
 }
 
 /* Terminal box */
@@ -30,6 +38,8 @@ body {
   display: none; /* caché au début */
   flex-direction: column;
   justify-content: flex-start;
+  position: relative;
+  z-index: 1;
 }
 
 /* Curseur clignotant */
@@ -41,10 +51,7 @@ body {
   margin-left: 5px;
   animation: blink 1s infinite;
 }
-
-@keyframes blink {
-  50% { opacity: 0; }
-}
+@keyframes blink { 50% { opacity: 0; } }
 
 /* Boutons */
 .btn {
@@ -60,21 +67,16 @@ body {
   opacity: 0;
   animation: fadeIn 1s forwards;
 }
-
-/* Apparition progressive */
 .btn:nth-of-type(1) { animation-delay: 0.5s; }
 .btn:nth-of-type(2) { animation-delay: 1s; }
 .btn:nth-of-type(3) { animation-delay: 1.5s; }
 
-/* Hover */
 .btn:hover {
   background-color: #00ff00;
   color: black;
   box-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00;
   animation: glitch 0.4s infinite;
 }
-
-/* Effet scan */
 .btn::before {
   content: "";
   position: absolute;
@@ -85,17 +87,10 @@ body {
   background: linear-gradient(120deg, transparent, #00ff00, transparent);
   transition: 0.5s;
 }
+.btn:hover::before { left: 100%; }
 
-.btn:hover::before {
-  left: 100%;
-}
-
-/* Animation apparition */
-@keyframes fadeIn {
-  to { opacity: 1; }
-}
-
-/* Glitch */
+/* Animations */
+@keyframes fadeIn { to { opacity: 1; } }
 @keyframes glitch {
   0% { transform: translate(0); }
   25% { transform: translate(2px, -2px); }
@@ -115,41 +110,65 @@ body {
   color: #00ff00;
   font-family: "Courier New", monospace;
   padding: 20px;
-  z-index: 9999;
+  z-index: 2;
 }
-
-#boot-text {
-  white-space: pre-wrap;
-  font-size: 14px;
-}
+#boot-text { white-space: pre-wrap; font-size: 14px; }
 </style>
 </head>
 
 <body>
+
+<canvas id="matrix"></canvas>
 
 <!-- Boot screen -->
 <div id="boot-screen">
   <pre id="boot-text"></pre>
 </div>
 
-<!-- Site principal -->
+<!-- Terminal principal -->
 <div class="terminal-box">
-
   <h1>&gt; Accueil<span class="cursor"></span></h1>
   <h2>&gt; Bienvenue sur mon portfolio</h2>
-
   <p>Étudiant en cybersécurité web spécialisé en pentesting.</p>
   <p>&gt; Explorez mes projets, mon profil et mes compétences.</p>
-
   <p>&gt; Accès :</p>
-
   <a href="projets.html" class="btn">[ Voir les projets ]</a>
   <a href="profil.html" class="btn">[ Voir le profil ]</a>
   <a href="competences.html" class="btn">[ Voir les compétences ]</a>
-
 </div>
 
 <script>
+// Matrix Animation
+const canvas = document.getElementById("matrix");
+const ctx = canvas.getContext("2d");
+let width = canvas.width = window.innerWidth;
+let height = canvas.height = window.innerHeight;
+
+const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()*&^%";
+const fontSize = 16;
+const columns = Math.floor(width / fontSize);
+const drops = [];
+for (let x = 0; x < columns; x++) drops[x] = Math.random() * height;
+
+function drawMatrix() {
+  ctx.fillStyle = "rgba(0,0,0,0.05)";
+  ctx.fillRect(0, 0, width, height);
+  ctx.fillStyle = "#00ff00";
+  ctx.font = fontSize + "px monospace";
+  for (let i = 0; i < drops.length; i++) {
+    const text = letters.charAt(Math.floor(Math.random() * letters.length));
+    ctx.fillText(text, i * fontSize, drops[i]);
+    if (drops[i] > height && Math.random() > 0.975) drops[i] = 0;
+    drops[i] += fontSize;
+  }
+}
+setInterval(drawMatrix, 50);
+window.addEventListener("resize", () => {
+  width = canvas.width = window.innerWidth;
+  height = canvas.height = window.innerHeight;
+});
+
+// Boot screen
 const bootLines = [
 "[    0.000000] Booting Kali Linux...",
 "[    0.523421] Loading kernel modules...",
@@ -164,10 +183,8 @@ const bootLines = [
 ];
 
 let i = 0;
-
 function typeLine() {
   const textElement = document.getElementById("boot-text");
-
   if (i < bootLines.length) {
     textElement.innerHTML += bootLines[i] + "\n";
     i++;
@@ -179,7 +196,6 @@ function typeLine() {
     }, 1000);
   }
 }
-
 window.onload = typeLine;
 </script>
 
