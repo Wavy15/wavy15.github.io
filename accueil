@@ -66,9 +66,10 @@ body {
 <div class="terminal-box">
 
   <h1>&gt; Accueil<span class="cursor"></span></h1>
-  <H2>&gt; Bienvenue sur mon portfolio<span class="cursor"></span></h2>
+  <h2>&gt; Bienvenue sur mon portfolio</h2>
 
   <p>Étudiant en cybersécurité web spécialisé en pentesting.</p>
+  <p>&gt; Explorez mes projets, compétences et mon profil.</p>
 
   <p>&gt; Accès :</p>
 
@@ -77,6 +78,5 @@ body {
   <a href="competences.html" class="btn">[ Voir les compétences ]</a>
 
 </div>
-
 </body>
 </html>
