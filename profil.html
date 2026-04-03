@@ -1,1 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Profil</title>
 
+<style>
+/* Full-screen body */
+body {
+  background-color: black;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center; /* centre horizontalement */
+  align-items: center;     /* centre verticalement */
+  font-family: "Courier New", monospace;
+  color: #00ff00;
+}
+
+/* Terminal box */
+.terminal-box {
+  border: 2px solid #00ff00;
+  padding: 30px;
+  box-shadow: 0 0 20px #00ff00;
+  text-align: left;
+  max-width: 80%;
+}
+
+/* Curseur clignotant */
+.cursor {
+  display: inline-block;
+  width: 10px;
+  height: 20px;
+  background: #00ff00;
+  margin-left: 5px;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+/* Boutons style terminal */
+.btn {
+  display: inline-block;
+  margin: 10px 10px 0 0;
+  padding: 10px 20px;
+  color: #00ff00;
+  border: 1px solid #00ff00;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background-color: #00ff00;
+  color: black;
+}
+</style>
+</head>
+
+<body>
+
+<div class="terminal-box">
+
+  <h1>&gt; Profil<span class="cursor"></span></h1>
+
+  <p>&gt; Informations personnelles :</p>
+  <ul>
+    <li>Nom : Houdayer</li>
+    <li>Prénom : Théo</li>
+    <li>Âge : 17 ans</li>
+    <li>Éducation : Terminale, spécialité : NSI, Mathématiques</li>
+    <li>Objectif : Devenir Pentester Web freelance</li>
+  </ul>
+
+  <p>&gt; Présentation :</p>
+  <p>
+    Passionné par la cybersécurité et le hacking web éthique, je réalise des tests sur des environnements de test et participe à des projets bug bounty. Je développe mes compétences techniques sur HTML, CSS, JavaScript, PHP, Python et sur les outils de pentesting tels que Burp Suite et Nmap
+  </p>
+
+  <p>&gt; Accéder aux autres pages :</p>
+  <a href="index.html" class="btn">[ Accueil ]</a>
+  <a href="competences.html" class="btn">[ Compétences ]</a>
+  <a href="projets.html" class="btn">[ Projets ]</a>
+
+</div>
+
+</body>
+</html>
