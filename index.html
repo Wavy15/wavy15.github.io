@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Accueil</title>
+
+  <style>
+    body {
+      background-color: black;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .terminal-box {
+      background-color: black;
+      color: #00ff00;
+      font-family: "Courier New", monospace;
+      padding: 20px;
+      border: 2px solid #00ff00;
+      box-shadow: 0 0 10px #00ff00;
+      max-width: 600px;
+    }
+
+    .terminal-box h1 {
+      color: #00ff00;
+    }
+
+    .btn {
+      display: block;
+      margin: 10px 0;
+      padding: 10px;
+      color: #00ff00;
+      border: 1px solid #00ff00;
+      text-decoration: none;
+      width: fit-content;
+    }
+
+    .btn:hover {
+      background: #00ff00;
+      color: black;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 10px;
+      height: 20px;
+      background: #00ff00;
+      margin-left: 5px;
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="terminal-box">
+
+  <h1>&gt; Accueil<span class="cursor"></span></h1>
+
+  <p>Étudiant en cybersécurité web spécialisé en pentesting.</p>
+
+  <p>&gt; Accès :</p>
+
+  <a href="page.html" class="btn">[ Voir les projets ]</a>
+  <a href="profil.html" class="btn">[ Voir le profil ]</a>
+  <a href="competences.html" class="btn">[ Voir les compétences ]</a>
+
+</div>
+
+</body>
+</html>
