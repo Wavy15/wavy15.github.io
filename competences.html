@@ -1,1 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Compétences</title>
 
+<style>
+/* Full-screen body */
+body {
+  background-color: black;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center; /* centre horizontalement */
+  align-items: center;     /* centre verticalement */
+  font-family: "Courier New", monospace;
+  color: #00ff00;
+}
+
+/* Terminal box */
+.terminal-box {
+  border: 2px solid #00ff00;
+  padding: 30px;
+  box-shadow: 0 0 20px #00ff00;
+  text-align: left;
+  max-width: 80%;
+}
+
+/* Curseur clignotant */
+.cursor {
+  display: inline-block;
+  width: 10px;
+  height: 20px;
+  background: #00ff00;
+  margin-left: 5px;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+/* Boutons style terminal */
+.btn {
+  display: inline-block;
+  margin: 10px 10px 0 0;
+  padding: 10px 20px;
+  color: #00ff00;
+  border: 1px solid #00ff00;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background-color: #00ff00;
+  color: black;
+}
+
+/* Liste compétences */
+ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+li:before {
+  content: "✔ ";
+  color: #00ff00;
+}
+</style>
+</head>
+
+<body>
+
+<div class="terminal-box">
+
+  <h1>&gt; Compétences<span class="cursor"></span></h1>
+
+  <p>&gt; Voici mes compétences techniques :</p>
+
+  <ul>
+    <li>Pentesting web : XSS, SQLi, CSRF, User Enumeration, DoS</li>
+    <li>Analyse de sécurité et rapports techniques</li>
+    <li>Programmation : HTML, CSS, JavaScript, PHP, Python</li>
+    <li>Base de données : SQL, MySQL</li>
+    <li>Réseaux et systèmes : Linux, TCP/IP, HTTP/HTTPS</li>
+    <li>Outils : Burp Suite, Nmap</li>
+    <li>Bug bounty et hacking web éthique</li>
+  </ul>
+
+  <p>&gt; Accéder aux autres pages :</p>
+
+  <a href="projets.html" class="btn">[ Projets ]</a>
+  <a href="profil.html" class="btn">[ Profil ]</a>
+  <a href="index.html" class="btn">[ Accueil ]</a>
+
+</div>
+
+</body>
+</html>
