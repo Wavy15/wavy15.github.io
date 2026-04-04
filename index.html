@@ -28,7 +28,7 @@ canvas {
   display: block;
 }
 
-/* Terminal */
+/* Terminal plein écran centré */
 .terminal {
   position: relative;
   z-index: 1;
@@ -36,7 +36,11 @@ canvas {
   background: rgba(0,0,0,0.6);
   backdrop-filter: blur(5px);
   height: 100vh;
-  display: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;  /* centre verticalement */
+  align-items: center;      /* centre horizontalement */
+  text-align: center;
 }
 
 /* Curseur clignotant */
@@ -51,9 +55,14 @@ canvas {
 @keyframes blink { 50% { opacity: 0; } }
 
 /* Boutons */
+.btn-container {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
 .btn {
   display: inline-block;
-  margin: 10px 10px 0 0;
   padding: 12px 20px;
   border: 1px solid rgba(0,255,0,0.4);
   color: #00ff00;
@@ -93,7 +102,6 @@ canvas {
   z-index: 2;
   transition: opacity 0.5s ease;
 }
-
 #boot-text {
   white-space: pre-wrap;
   font-size: 14px;
@@ -113,10 +121,12 @@ canvas {
   <h1 id="title"></h1>
   <p>Bienvenue sur mon portfolio</p>
   <p>&gt; Accès :</p>
-
-  <a href="projets.html" class="btn">Projets</a>
-  <a href="profil.html" class="btn">Profil</a>
-  <a href="competences.html" class="btn">Compétences</a>
+  
+  <div class="btn-container">
+    <a href="projets.html" class="btn">Projets</a>
+    <a href="profil.html" class="btn">Profil</a>
+    <a href="competences.html" class="btn">Compétences</a>
+  </div>
 </div>
 
 <script>
@@ -182,7 +192,7 @@ function bootSequence() {
       const boot = document.getElementById("boot");
       boot.style.opacity = "0";
       setTimeout(() => boot.style.display="none", 500);
-      document.querySelector(".terminal").style.display="block";
+      document.querySelector(".terminal").style.display="flex"; // Flex pour centrer
       typeTitle();
     }, 800);
   }
