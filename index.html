@@ -13,7 +13,7 @@ body {
   overflow: hidden;
 }
 
-/* MATRIX (ancien style) */
+
 canvas {
   position: fixed;
   top: 0;
@@ -21,7 +21,7 @@ canvas {
   z-index: 0;
 }
 
-/* TERMINAL */
+
 .terminal {
   position: relative;
   z-index: 1;
@@ -32,7 +32,7 @@ canvas {
   display: none;
 }
 
-/* CURSEUR */
+
 .cursor {
   display: inline-block;
   width: 10px;
@@ -43,7 +43,7 @@ canvas {
 }
 @keyframes blink { 50% { opacity: 0; } }
 
-/* BOUTONS */
+
 .btn {
   display: inline-block;
   margin: 10px 10px 0 0;
@@ -81,7 +81,7 @@ canvas {
   transform: scale(0.95);
 }
 
-/* BOOT SCREEN */
+
 #boot {
   position: fixed;
   top: 0;
@@ -106,12 +106,12 @@ canvas {
 
 <canvas id="matrix"></canvas>
 
-<!-- BOOT -->
+
 <div id="boot">
   <pre id="boot-text"></pre>
 </div>
 
-<!-- TERMINAL -->
+
 <div class="terminal">
   <h1 id="title"></h1>
   <p>Bienvenue sur mon portfolio</p>
@@ -123,7 +123,7 @@ canvas {
 </div>
 
 <script>
-// MATRIX ANCIEN
+
 const canvas = document.getElementById("matrix");
 const ctx = canvas.getContext("2d");
 
@@ -159,7 +159,7 @@ window.addEventListener("resize", ()=>{
   height = canvas.height = window.innerHeight;
 });
 
-// BOOT SCREEN
+
 const bootLines = [
 "[    0.000000] Booting Kali Linux...",
 "[    0.523421] Loading kernel modules...",
@@ -192,7 +192,7 @@ function bootSequence() {
   }
 }
 
-// TYPING TITLE
+
 const text = "> Accueil";
 let j = 0;
 function typeTitle() {
