@@ -2,14 +2,15 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>Test</title>
+<title>Accueil</title>
 
 <style>
 body {
   margin: 0;
   background: black;
-  color: #00ff00;
+  color: #66ff66;
   font-family: monospace;
+  overflow: hidden;
 }
 
 /* MATRIX */
@@ -24,17 +25,51 @@ canvas {
 .terminal {
   position: relative;
   z-index: 1;
-  padding: 20px;
+  padding: 30px;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(5px);
+  height: 100vh;
 }
 
-/* BOUTONS */
+/* TITRE */
+h1 {
+  margin-bottom: 20px;
+}
+
+/* BOUTONS STYLÉS */
 .btn {
-  display: block;
-  margin: 10px 0;
-  padding: 10px;
-  border: 1px solid #00ff00;
-  color: #00ff00;
+  display: inline-block;
+  margin: 10px 10px 0 0;
+  padding: 12px 20px;
+  border: 1px solid rgba(102,255,102,0.4);
+  color: #66ff66;
   text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  transition: 0.3s;
+}
+
+/* glow */
+.btn:hover {
+  color: #ccffcc;
+  border-color: #99ff99;
+  box-shadow: 0 0 10px #66ff66, 0 0 20px rgba(102,255,102,0.5);
+}
+
+/* scan effect */
+.btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(102,255,102,0.4), transparent);
+  transition: 0.5s;
+}
+
+.btn:hover::before {
+  left: 100%;
 }
 </style>
 </head>
@@ -46,33 +81,37 @@ canvas {
 <div class="terminal">
   <h1>&gt; Accueil</h1>
 
-  <a href="#" class="btn">Projet</a>
+  <p>Bienvenue sur mon portfolio</p>
+  <p>&gt; Accès :</p>
+
+  <a href="#" class="btn">Projets</a>
   <a href="#" class="btn">Profil</a>
   <a href="#" class="btn">Compétences</a>
 </div>
 
 <script>
-// MATRIX SIMPLE
+// MATRIX
 const canvas = document.getElementById("matrix");
 const ctx = canvas.getContext("2d");
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-const letters = "01";
+const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 const fontSize = 14;
-const columns = canvas.width / fontSize;
-
-const drops = Array(Math.floor(columns)).fill(1);
+const columns = Math.floor(canvas.width / fontSize);
+const drops = Array(columns).fill(1);
 
 function draw() {
-  ctx.fillStyle = "rgba(0,0,0,0.1)";
+  ctx.fillStyle = "rgba(0,0,0,0.08)";
   ctx.fillRect(0,0,canvas.width,canvas.height);
 
-  ctx.fillStyle = "#00ff00";
   ctx.font = fontSize + "px monospace";
 
   for (let i = 0; i < drops.length; i++) {
+    const colors = ["#33ff33", "#66ff66", "#99ff99"];
+    ctx.fillStyle = colors[Math.floor(Math.random()*colors.length)];
+
     const text = letters[Math.floor(Math.random()*letters.length)];
     ctx.fillText(text, i*fontSize, drops[i]*fontSize);
 
