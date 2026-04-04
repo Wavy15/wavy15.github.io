@@ -56,14 +56,12 @@ canvas {
   transition: 0.3s;
 }
 
-/* HOVER */
 .btn:hover {
   color: #ccffcc;
   border-color: #99ff99;
   box-shadow: 0 0 10px #66ff66, 0 0 20px rgba(102,255,102,0.5);
 }
 
-/* SCAN */
 .btn::before {
   content: "";
   position: absolute;
@@ -74,8 +72,13 @@ canvas {
   background: linear-gradient(120deg, transparent, rgba(102,255,102,0.4), transparent);
   transition: 0.5s;
 }
+
 .btn:hover::before {
   left: 100%;
+}
+
+.btn:active {
+  transform: scale(0.95);
 }
 
 /* BOOT SCREEN */
@@ -89,6 +92,7 @@ canvas {
   color: #66ff66;
   padding: 20px;
   z-index: 2;
+  transition: opacity 0.5s ease;
 }
 
 #boot-text {
@@ -114,11 +118,10 @@ canvas {
   <p>Bienvenue sur mon portfolio</p>
   <p>&gt; Accès :</p>
 
-<a href="projets.html" class="btn">Projets</a>
-<a href="profil.html" class="btn">Profil</a>
-<a href="competences.html" class="btn">Compétences</a>
-<a>Contacts</a>
-  
+  <!-- ⚠️ LIENS CORRIGÉS -->
+  <a href="projets.html" class="btn">Projets</a>
+  <a href="profil.html" class="btn">Profil</a>
+  <a href="competences.html" class="btn">Compétences</a>
 </div>
 
 <script>
@@ -154,7 +157,7 @@ function drawMatrix() {
 
 setInterval(drawMatrix, 50);
 
-// BOOT TEXT
+// BOOT
 const bootLines = [
 "[ OK ] Booting Kali Linux...",
 "[ OK ] Loading modules...",
@@ -178,14 +181,22 @@ function bootSequence() {
     setTimeout(bootSequence, 200);
   } else {
     setTimeout(() => {
-      document.getElementById("boot").style.display = "none";
+      const boot = document.getElementById("boot");
+
+      // fade out
+      boot.style.opacity = "0";
+
+      setTimeout(() => {
+        boot.style.display = "none";
+      }, 500);
+
       document.querySelector(".terminal").style.display = "block";
       typeTitle();
     }, 800);
   }
 }
 
-// TYPING TITLE
+// TYPING
 const text = "> Accueil";
 let j = 0;
 
