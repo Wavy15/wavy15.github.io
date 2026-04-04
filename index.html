@@ -15,7 +15,7 @@ body {
   overflow: hidden;
 }
 
-
+/* MATRIX */
 #matrix {
   position: fixed;
   top: 0;
@@ -26,7 +26,7 @@ body {
   background: black;
 }
 
-
+/* TERMINAL */
 .terminal-box {
   width: 100vw;
   height: 100vh;
@@ -40,20 +40,20 @@ body {
   position: relative;
   z-index: 1;
 
-
+  /* effet glass */
   background: rgba(0,0,0,0.6);
   backdrop-filter: blur(6px);
 
   animation: terminalFade 1s ease forwards;
 }
 
-
+/* Animation terminal */
 @keyframes terminalFade {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-
+/* Curseur */
 .cursor {
   display: inline-block;
   width: 10px;
@@ -64,7 +64,7 @@ body {
 }
 @keyframes blink { 50% { opacity: 0; } }
 
-
+/* BOUTONS */
 .btn {
   display: block;
   margin: 15px auto;
@@ -80,17 +80,17 @@ body {
   transition: all 0.3s ease;
 }
 
-
+/* Apparition progressive */
 .btn:nth-of-type(1) { animation: fadeIn 1s forwards 0.5s; }
 .btn:nth-of-type(2) { animation: fadeIn 1s forwards 1s; }
 .btn:nth-of-type(3) { animation: fadeIn 1s forwards 1.5s; }
 
-
+/* FIX fadeIn */
 @keyframes fadeIn {
   to { opacity: 1; }
 }
 
-
+/* Hover */
 .btn:hover {
   color: #ccffcc;
   border-color: #99ff99;
@@ -100,7 +100,7 @@ body {
     inset 0 0 10px rgba(102,255,102,0.2);
 }
 
-
+/* Scan */
 .btn::before {
   content: "";
   position: absolute;
@@ -113,7 +113,7 @@ body {
 }
 .btn:hover::before { left: 120%; }
 
-
+/* Bordure animée */
 .btn::after {
   content: "";
   position: absolute;
@@ -131,7 +131,7 @@ body {
   transform: scale(0.95);
 }
 
-
+/* BOOT */
 #boot-screen {
   position: fixed;
   top: 0;
@@ -171,7 +171,7 @@ body {
 </div>
 
 <script>
-
+// MATRIX
 const canvas = document.getElementById("matrix");
 const ctx = canvas.getContext("2d");
 
@@ -207,7 +207,7 @@ window.addEventListener("resize", () => {
   height = canvas.height = window.innerHeight;
 });
 
-
+// BOOT
 const bootLines = [
 "[    0.000000] Booting Kali Linux...",
 "[    0.523421] Loading modules...",
@@ -239,7 +239,7 @@ function typeLine() {
   }
 }
 
-
+// TYPING TITLE
 const titleText = "> Accueil";
 let j = 0;
 
