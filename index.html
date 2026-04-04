@@ -15,6 +15,7 @@ body {
   overflow: hidden;
 }
 
+
 #matrix {
   position: fixed;
   top: 0;
@@ -24,6 +25,7 @@ body {
   z-index: 0;
   background: black;
 }
+
 
 .terminal-box {
   width: 100vw;
@@ -37,7 +39,20 @@ body {
   justify-content: flex-start;
   position: relative;
   z-index: 1;
+
+
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(6px);
+
+  animation: terminalFade 1s ease forwards;
 }
+
+
+@keyframes terminalFade {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 
 .cursor {
   display: inline-block;
@@ -61,16 +76,19 @@ body {
   position: relative;
   overflow: hidden;
   opacity: 0;
-  animation: fadeIn 1s forwards;
   letter-spacing: 1px;
   transition: all 0.3s ease;
-  backdrop-filter: blur(2px);
 }
 
 
-.btn:nth-of-type(1) { animation-delay: 0.5s; }
-.btn:nth-of-type(2) { animation-delay: 1s; }
-.btn:nth-of-type(3) { animation-delay: 1.5s; }
+.btn:nth-of-type(1) { animation: fadeIn 1s forwards 0.5s; }
+.btn:nth-of-type(2) { animation: fadeIn 1s forwards 1s; }
+.btn:nth-of-type(3) { animation: fadeIn 1s forwards 1.5s; }
+
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
 
 
 .btn:hover {
@@ -90,18 +108,10 @@ body {
   left: -120%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    120deg,
-    transparent,
-    rgba(102,255,102,0.4),
-    transparent
-  );
+  background: linear-gradient(120deg, transparent, rgba(102,255,102,0.4), transparent);
   transition: 0.6s;
 }
-
-.btn:hover::before {
-  left: 120%;
-}
+.btn:hover::before { left: 120%; }
 
 
 .btn::after {
@@ -115,16 +125,12 @@ body {
   opacity: 0;
   transition: 0.3s;
 }
-
-.btn:hover::after {
-  opacity: 1;
-}
-
+.btn:hover::after { opacity: 1; }
 
 .btn:active {
   transform: scale(0.95);
-  box-shadow: 0 0 5px #00ff00;
 }
+
 
 #boot-screen {
   position: fixed;
@@ -134,11 +140,13 @@ body {
   height: 100%;
   background: black;
   color: #00ff00;
-  font-family: "Courier New", monospace;
   padding: 20px;
   z-index: 2;
 }
-#boot-text { white-space: pre-wrap; font-size: 14px; }
+#boot-text {
+  white-space: pre-wrap;
+  font-size: 14px;
+}
 </style>
 </head>
 
@@ -151,31 +159,32 @@ body {
 </div>
 
 <div class="terminal-box">
-  <h1>&gt; Accueil<span class="cursor"></span></h1>
+  <h1 id="typing-title"></h1>
   <h2>&gt; Bienvenue sur mon portfolio</h2>
   <p>Étudiant en cybersécurité web spécialisé en pentesting.</p>
   <p>&gt; Explorez mes projets, mon profil et mes compétences.</p>
   <p>&gt; Accès :</p>
+
   <a href="projets.html" class="btn">[ Voir les projets ]</a>
   <a href="profil.html" class="btn">[ Voir le profil ]</a>
   <a href="competences.html" class="btn">[ Voir les compétences ]</a>
 </div>
 
 <script>
-// MATRIX
+
 const canvas = document.getElementById("matrix");
 const ctx = canvas.getContext("2d");
+
 let width = canvas.width = window.innerWidth;
 let height = canvas.height = window.innerHeight;
 
-const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()*&^%";
+const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*";
 const fontSize = 16;
 const columns = Math.floor(width / fontSize);
-const drops = [];
-for (let x = 0; x < columns; x++) drops[x] = Math.random() * height;
+const drops = Array(columns).fill(1);
 
 function drawMatrix() {
-  ctx.fillStyle = "rgba(0,0,0,0.08)"; // fond légèrement plus sombre
+  ctx.fillStyle = "rgba(0,0,0,0.08)";
   ctx.fillRect(0, 0, width, height);
 
   ctx.font = fontSize + "px monospace";
@@ -184,28 +193,28 @@ function drawMatrix() {
     const colors = ["#33ff33", "#66ff66", "#99ff99", "#ccffcc"];
     ctx.fillStyle = colors[Math.floor(Math.random() * colors.length)];
 
-    const text = letters.charAt(Math.floor(Math.random() * letters.length));
-    ctx.fillText(text, i * fontSize, drops[i]);
+    const text = letters[Math.floor(Math.random() * letters.length)];
+    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
 
-    if (drops[i] > height && Math.random() > 0.975) drops[i] = 0;
-    drops[i] += fontSize;
+    if (drops[i] * fontSize > height && Math.random() > 0.975) drops[i] = 0;
+    drops[i]++;
   }
 }
 setInterval(drawMatrix, 50);
 
-window.addEventListener("resize", ()=>{
+window.addEventListener("resize", () => {
   width = canvas.width = window.innerWidth;
   height = canvas.height = window.innerHeight;
 });
 
-// BOOT SCREEN
+
 const bootLines = [
 "[    0.000000] Booting Kali Linux...",
-"[    0.523421] Loading kernel modules...",
-"[    1.124532] Initializing network interfaces...",
-"[    1.845223] Starting system services...",
-"[    2.345623] Mounting file systems...",
-"[    2.800000] Bypassing security protocols...",
+"[    0.523421] Loading modules...",
+"[    1.124532] Initializing network...",
+"[    1.845223] Starting services...",
+"[    2.345623] Mounting systems...",
+"[    2.800000] Bypassing security...",
 "[    2.945123] Launching terminal...",
 "[    3.500000] Access granted ✔",
 "",
@@ -213,21 +222,38 @@ const bootLines = [
 ];
 
 let i = 0;
+
 function typeLine() {
-  const textElement = document.getElementById("boot-text");
+  const el = document.getElementById("boot-text");
+
   if (i < bootLines.length) {
-    textElement.innerHTML += bootLines[i] + "\n";
+    el.innerHTML += bootLines[i] + "\n";
     i++;
-    setTimeout(typeLine, 250);
+    setTimeout(typeLine, 200);
   } else {
-    setTimeout(()=>{
-      document.getElementById("boot-screen").style.display="none";
-      document.querySelector(".terminal-box").style.display="flex";
-    },1000);
+    setTimeout(() => {
+      document.getElementById("boot-screen").style.display = "none";
+      document.querySelector(".terminal-box").style.display = "flex";
+      typeTitle();
+    }, 800);
   }
 }
 
-// ATTEND QUE LE DOM SOIT CHARGÉ
+
+const titleText = "> Accueil";
+let j = 0;
+
+function typeTitle() {
+  const el = document.getElementById("typing-title");
+  if (j < titleText.length) {
+    el.innerHTML += titleText[j];
+    j++;
+    setTimeout(typeTitle, 80);
+  } else {
+    el.innerHTML += '<span class="cursor"></span>';
+  }
+}
+
 window.addEventListener("DOMContentLoaded", typeLine);
 </script>
 
