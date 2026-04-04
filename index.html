@@ -2,150 +2,39 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>Accueil</title>
+<title>Test</title>
 
 <style>
 body {
   margin: 0;
-  padding: 0;
-  height: 100vh;
-  width: 100vw;
-  font-family: "Courier New", monospace;
+  background: black;
   color: #00ff00;
-  overflow: hidden;
+  font-family: monospace;
 }
 
 /* MATRIX */
-#matrix {
+canvas {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
   z-index: 0;
-  background: black;
 }
 
 /* TERMINAL */
-.terminal-box {
-  width: 100vw;
-  height: 100vh;
-  border: 2px solid #00ff00;
-  box-shadow: 0 0 20px #00ff00;
-  padding: 20px;
-  box-sizing: border-box;
-  display: none;
-  flex-direction: column;
-  justify-content: flex-start;
+.terminal {
   position: relative;
   z-index: 1;
-
-  /* effet glass */
-  background: rgba(0,0,0,0.6);
-  backdrop-filter: blur(6px);
-
-  animation: terminalFade 1s ease forwards;
+  padding: 20px;
 }
-
-/* Animation terminal */
-@keyframes terminalFade {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Curseur */
-.cursor {
-  display: inline-block;
-  width: 10px;
-  height: 20px;
-  background: #00ff00;
-  margin-left: 5px;
-  animation: blink 1s infinite;
-}
-@keyframes blink { 50% { opacity: 0; } }
 
 /* BOUTONS */
 .btn {
   display: block;
-  margin: 15px auto;
-  padding: 12px 25px;
-  color: #66ff66;
-  border: 1px solid rgba(102,255,102,0.4);
-  text-decoration: none;
-  width: fit-content;
-  position: relative;
-  overflow: hidden;
-  opacity: 0;
-  letter-spacing: 1px;
-  transition: all 0.3s ease;
-}
-
-/* Apparition progressive */
-.btn:nth-of-type(1) { animation: fadeIn 1s forwards 0.5s; }
-.btn:nth-of-type(2) { animation: fadeIn 1s forwards 1s; }
-.btn:nth-of-type(3) { animation: fadeIn 1s forwards 1.5s; }
-
-/* FIX fadeIn */
-@keyframes fadeIn {
-  to { opacity: 1; }
-}
-
-/* Hover */
-.btn:hover {
-  color: #ccffcc;
-  border-color: #99ff99;
-  box-shadow: 
-    0 0 5px #66ff66,
-    0 0 15px rgba(102,255,102,0.5),
-    inset 0 0 10px rgba(102,255,102,0.2);
-}
-
-/* Scan */
-.btn::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -120%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(120deg, transparent, rgba(102,255,102,0.4), transparent);
-  transition: 0.6s;
-}
-.btn:hover::before { left: 120%; }
-
-/* Bordure animée */
-.btn::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border: 1px solid transparent;
-  background: linear-gradient(90deg, transparent, #66ff66, transparent) border-box;
-  mask: linear-gradient(#000 0 0) padding-box, linear-gradient(#000 0 0);
-  mask-composite: exclude;
-  opacity: 0;
-  transition: 0.3s;
-}
-.btn:hover::after { opacity: 1; }
-
-.btn:active {
-  transform: scale(0.95);
-}
-
-/* BOOT */
-#boot-screen {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: black;
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #00ff00;
   color: #00ff00;
-  padding: 20px;
-  z-index: 2;
-}
-#boot-text {
-  white-space: pre-wrap;
-  font-size: 14px;
+  text-decoration: none;
 }
 </style>
 </head>
@@ -154,107 +43,45 @@ body {
 
 <canvas id="matrix"></canvas>
 
-<div id="boot-screen">
-  <pre id="boot-text"></pre>
-</div>
+<div class="terminal">
+  <h1>&gt; Accueil</h1>
 
-<div class="terminal-box">
-  <h1 id="typing-title"></h1>
-  <h2>&gt; Bienvenue sur mon portfolio</h2>
-  <p>Étudiant en cybersécurité web spécialisé en pentesting.</p>
-  <p>&gt; Explorez mes projets, mon profil et mes compétences.</p>
-  <p>&gt; Accès :</p>
-
-  <a href="projets.html" class="btn">[ Voir les projets ]</a>
-  <a href="profil.html" class="btn">[ Voir le profil ]</a>
-  <a href="competences.html" class="btn">[ Voir les compétences ]</a>
+  <a href="#" class="btn">Projet</a>
+  <a href="#" class="btn">Profil</a>
+  <a href="#" class="btn">Compétences</a>
 </div>
 
 <script>
-// MATRIX
+// MATRIX SIMPLE
 const canvas = document.getElementById("matrix");
 const ctx = canvas.getContext("2d");
 
-let width = canvas.width = window.innerWidth;
-let height = canvas.height = window.innerHeight;
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
-const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*";
-const fontSize = 16;
-const columns = Math.floor(width / fontSize);
-const drops = Array(columns).fill(1);
+const letters = "01";
+const fontSize = 14;
+const columns = canvas.width / fontSize;
 
-function drawMatrix() {
-  ctx.fillStyle = "rgba(0,0,0,0.08)";
-  ctx.fillRect(0, 0, width, height);
+const drops = Array(Math.floor(columns)).fill(1);
 
+function draw() {
+  ctx.fillStyle = "rgba(0,0,0,0.1)";
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+
+  ctx.fillStyle = "#00ff00";
   ctx.font = fontSize + "px monospace";
 
   for (let i = 0; i < drops.length; i++) {
-    const colors = ["#33ff33", "#66ff66", "#99ff99", "#ccffcc"];
-    ctx.fillStyle = colors[Math.floor(Math.random() * colors.length)];
+    const text = letters[Math.floor(Math.random()*letters.length)];
+    ctx.fillText(text, i*fontSize, drops[i]*fontSize);
 
-    const text = letters[Math.floor(Math.random() * letters.length)];
-    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-    if (drops[i] * fontSize > height && Math.random() > 0.975) drops[i] = 0;
+    if (drops[i]*fontSize > canvas.height) drops[i] = 0;
     drops[i]++;
   }
 }
-setInterval(drawMatrix, 50);
 
-window.addEventListener("resize", () => {
-  width = canvas.width = window.innerWidth;
-  height = canvas.height = window.innerHeight;
-});
-
-// BOOT
-const bootLines = [
-"[    0.000000] Booting Kali Linux...",
-"[    0.523421] Loading modules...",
-"[    1.124532] Initializing network...",
-"[    1.845223] Starting services...",
-"[    2.345623] Mounting systems...",
-"[    2.800000] Bypassing security...",
-"[    2.945123] Launching terminal...",
-"[    3.500000] Access granted ✔",
-"",
-"root@kali:~#"
-];
-
-let i = 0;
-
-function typeLine() {
-  const el = document.getElementById("boot-text");
-
-  if (i < bootLines.length) {
-    el.innerHTML += bootLines[i] + "\n";
-    i++;
-    setTimeout(typeLine, 200);
-  } else {
-    setTimeout(() => {
-      document.getElementById("boot-screen").style.display = "none";
-      document.querySelector(".terminal-box").style.display = "flex";
-      typeTitle();
-    }, 800);
-  }
-}
-
-// TYPING TITLE
-const titleText = "> Accueil";
-let j = 0;
-
-function typeTitle() {
-  const el = document.getElementById("typing-title");
-  if (j < titleText.length) {
-    el.innerHTML += titleText[j];
-    j++;
-    setTimeout(typeTitle, 80);
-  } else {
-    el.innerHTML += '<span class="cursor"></span>';
-  }
-}
-
-window.addEventListener("DOMContentLoaded", typeLine);
+setInterval(draw, 50);
 </script>
 
 </body>
