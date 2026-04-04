@@ -3,36 +3,36 @@
 <head>
 <meta charset="UTF-8">
 <title>Projets</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-
+/* Reset et styles de base */
 html, body {
-  height: 100%;
-  width: 100%;
   margin: 0;
   padding: 0;
-}
-
-body {
+  width: 100%;
+  height: 100%;
+  font-family: "Courier New", monospace;
+  background-color: #000;
+  color: #00ff00;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: black;
-  font-family: "Courier New", monospace;
-  color: #00ff00;
 }
 
-
+/* Conteneur principal */
 .terminal-box {
-  width: 100vw;       
-  height: 100vh;    
+  width: 90%;
+  max-width: 1000px;
+  min-height: 80vh;
   border: 2px solid #00ff00;
-  box-shadow: 0 0 20px #00ff00;
-  padding: 20px;     
-  box-sizing: border-box; 
+  box-shadow: 0 0 30px #00ff00;
+  padding: 30px;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start; 
+  gap: 20px;
+  overflow-y: auto;
 }
 
 /* Curseur clignotant */
@@ -49,21 +49,67 @@ body {
   50% { opacity: 0; }
 }
 
+/* Titres */
+h1, h2, h3, h4 {
+  margin: 5px 0;
+}
+
 /* Boutons style terminal */
 .btn {
-  display: block;
-  margin: 10px auto;
+  display: inline-block;
+  margin: 10px 5px 10px 0;
   padding: 10px 20px;
   color: #00ff00;
   border: 1px solid #00ff00;
   text-decoration: none;
-  transition: 0.3s;
-  width: fit-content;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  font-size: 1rem;
 }
 
 .btn:hover {
   background-color: #00ff00;
-  color: black;
+  color: #000;
+  transform: scale(1.05);
+}
+
+/* Liste des sections */
+section {
+  margin-bottom: 20px;
+}
+
+/* PDF links */
+.pdf-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pdf-link a {
+  width: fit-content;
+}
+
+/* Scrollbar personnalisée */
+.terminal-box::-webkit-scrollbar {
+  width: 8px;
+}
+.terminal-box::-webkit-scrollbar-thumb {
+  background-color: #00ff00;
+  border-radius: 4px;
+}
+.terminal-box::-webkit-scrollbar-track {
+  background: #000;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .terminal-box {
+    padding: 20px;
+  }
+  .btn {
+    font-size: 0.9rem;
+    padding: 8px 16px;
+  }
 }
 </style>
 </head>
@@ -72,29 +118,32 @@ body {
 
 <div class="terminal-box">
   <h1>&gt; Projets</h1>
-  <h2>&gt; Rapports bug bounty hors-scope :</h2>
-  <h3>&gt; Les noms des sites ne seront pas donnés pour des raisons de sécurité. De plus, chaque test est éffectué dans un environnement avec authorisation</h3>
-  <h3>&gt; Faille détectée : User-Enumeration + DoS mail</h3>
-  <h4>&gt; Voici le fichier en format PDF :</h4>
 
+  <section>
+    <h2>&gt; Rapports bug bounty hors-scope :</h2>
+    <h3>&gt; Les noms des sites ne seront pas donnés pour des raisons de sécurité. Chaque test est effectué dans un environnement avec autorisation.</h3>
 
-  <!-- Bouton de téléchargement PDF -->
-  <a href="Rapport User-Enumeration hors-scope.pdf" download class="btn">
-    [ Télécharger le rapport PDF ]
-  </a>
+    <article class="pdf-link">
+      <h3>&gt; Faille détectée : User-Enumeration + DoS mail</h3>
+      <a href="Rapport User-Enumeration hors-scope.pdf" download class="btn" aria-label="Télécharger le rapport User-Enumeration">
+        [ Télécharger le rapport PDF ]
+      </a>
+    </article>
 
-  <h3>&gt; Faille détetée : Internal Server Error triggered via malformed callbackUrl parameter in authentication endpoint </h3>
-  <h4>&gt; Voici le fichier en format PDF :</h4>
-  <!-- Bouton de téléchargement PDF -->
-  <a href="rapport VDP Internal Server Error triggered via malformed callbackUrl parameter in authentication endpoint.pdf" download class="btn">
-    [ Télécharger le rapport PDF]
-  </a>
+    <article class="pdf-link">
+      <h3>&gt; Faille détectée : Internal Server Error via malformed callbackUrl parameter</h3>
+      <a href="rapport VDP Internal Server Error triggered via malformed callbackUrl parameter in authentication endpoint.pdf" download class="btn" aria-label="Télécharger le rapport Internal Server Error">
+        [ Télécharger le rapport PDF ]
+      </a>
+    </article>
+  </section>
 
-  <p>&gt; Accéder aux autres pages :</p>
-  <a href="index.html" class="btn">[ Accueil ]</a>
-  <a href="competences.html" class="btn">[ Compétences ]</a>
-  <a href="profil.html" class="btn">[ Profil ]</a>
-
+  <section>
+    <p>&gt; Accéder aux autres pages :</p>
+    <a href="index.html" class="btn">[ Accueil ]</a>
+    <a href="competences.html" class="btn">[ Compétences ]</a>
+    <a href="profil.html" class="btn">[ Profil ]</a>
+  </section>
 </div>
 
 </body>
