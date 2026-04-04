@@ -5,23 +5,30 @@
 <title>Accueil</title>
 
 <style>
+/* Reset et style global */
 body {
   margin: 0;
+  padding: 0;
   background: black;
   color: #00ff00;
   font-family: monospace;
   overflow: hidden;
+  width: 100vw;
+  height: 100vh;
 }
 
-
+/* Canvas Matrix */
 canvas {
   position: fixed;
   top: 0;
   left: 0;
   z-index: 0;
+  width: 100vw;
+  height: 100vh;
+  display: block;
 }
 
-
+/* Terminal */
 .terminal {
   position: relative;
   z-index: 1;
@@ -32,7 +39,7 @@ canvas {
   display: none;
 }
 
-
+/* Curseur clignotant */
 .cursor {
   display: inline-block;
   width: 10px;
@@ -43,7 +50,7 @@ canvas {
 }
 @keyframes blink { 50% { opacity: 0; } }
 
-
+/* Boutons */
 .btn {
   display: inline-block;
   margin: 10px 10px 0 0;
@@ -55,13 +62,11 @@ canvas {
   overflow: hidden;
   transition: 0.3s;
 }
-
 .btn:hover {
   color: #ccffcc;
   border-color: #99ff99;
   box-shadow: 0 0 10px #00ff00, 0 0 20px rgba(0,255,0,0.5);
 }
-
 .btn::before {
   content: "";
   position: absolute;
@@ -72,22 +77,16 @@ canvas {
   background: linear-gradient(120deg, transparent, rgba(0,255,0,0.4), transparent);
   transition: 0.5s;
 }
+.btn:hover::before { left: 100%; }
+.btn:active { transform: scale(0.95); }
 
-.btn:hover::before {
-  left: 100%;
-}
-
-.btn:active {
-  transform: scale(0.95);
-}
-
-
+/* Boot screen */
 #boot {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   background: black;
   color: #00ff00;
   padding: 20px;
@@ -106,11 +105,9 @@ canvas {
 
 <canvas id="matrix"></canvas>
 
-
 <div id="boot">
   <pre id="boot-text"></pre>
 </div>
-
 
 <div class="terminal">
   <h1 id="title"></h1>
@@ -123,7 +120,7 @@ canvas {
 </div>
 
 <script>
-
+/* MATRIX EFFECT */
 const canvas = document.getElementById("matrix");
 const ctx = canvas.getContext("2d");
 
@@ -154,12 +151,12 @@ function drawMatrix() {
 }
 setInterval(drawMatrix, 50);
 
-window.addEventListener("resize", ()=>{
+window.addEventListener("resize", () => {
   width = canvas.width = window.innerWidth;
   height = canvas.height = window.innerHeight;
 });
 
-
+/* BOOT SEQUENCE */
 const bootLines = [
 "[    0.000000] Booting Kali Linux...",
 "[    0.523421] Loading kernel modules...",
@@ -184,15 +181,14 @@ function bootSequence() {
     setTimeout(() => {
       const boot = document.getElementById("boot");
       boot.style.opacity = "0";
-      setTimeout(()=> boot.style.display="none", 500);
-
+      setTimeout(() => boot.style.display="none", 500);
       document.querySelector(".terminal").style.display="block";
       typeTitle();
     }, 800);
   }
 }
 
-
+/* TYPING EFFECT */
 const text = "> Accueil";
 let j = 0;
 function typeTitle() {
