@@ -5,55 +5,77 @@
 <title>Profil</title>
 
 <style>
-/* Full-screen body */
+/* Body full screen */
 body {
   background-color: black;
   margin: 0;
-  padding: 0;
-  height: 100vh;
-  width: 100vw;
+  min-height: 100vh;
   display: flex;
-  justify-content: center; 
-  align-items: center;     
+  justify-content: center;
+  align-items: center;
   font-family: "Courier New", monospace;
   color: #00ff00;
 }
 
-/* Terminal box */
+/* Terminal */
 .terminal-box {
-  width: 100vw;       
-  height: 100vh;      
+  width: 90%;
+  max-width: 1000px;
+  height: auto;
+  max-height: 90vh;
   border: 2px solid #00ff00;
   box-shadow: 0 0 20px #00ff00;
-  padding: 40px;      
-  box-sizing: border-box; 
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start; 
+  padding: clamp(20px, 4vw, 40px);
+  box-sizing: border-box;
+  overflow-y: auto;
 }
 
-/* Curseur clignotant */
+/* Titres */
+h1 {
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  margin-bottom: 20px;
+}
+
+/* Paragraphes */
+p {
+  font-size: clamp(0.95rem, 2.4vw, 1.1rem);
+  line-height: 1.6;
+}
+
+/* Liste */
+ul {
+  padding-left: 20px;
+  font-size: clamp(0.95rem, 2.4vw, 1.1rem);
+}
+
+li {
+  margin-bottom: 6px;
+}
+
+/* Curseur animé */
 .cursor {
   display: inline-block;
-  width: 10px;
-  height: 20px;
+  width: 0.6em;
+  height: 1em;
   background: #00ff00;
-  margin-left: 5px;
+  margin-left: 6px;
   animation: blink 1s infinite;
+  vertical-align: bottom;
 }
 
 @keyframes blink {
   50% { opacity: 0; }
 }
 
-
+/* Boutons */
 .btn {
   display: inline-block;
-  margin: 10px 10px 0 0;
-  padding: 10px 20px;
+  margin: 12px 12px 0 0;
+  padding: 10px 22px;
   color: #00ff00;
   border: 1px solid #00ff00;
   text-decoration: none;
+  font-size: 0.95rem;
   transition: 0.3s;
 }
 
@@ -75,13 +97,16 @@ body {
     <li>Nom : Houdayer</li>
     <li>Prénom : Théo</li>
     <li>Âge : 17 ans</li>
-    <li>Éducation : Terminale, spécialité : NSI, Mathématiques</li>
+    <li>Éducation : Terminale – NSI, Mathématiques</li>
     <li>Objectif : Devenir Pentester Web freelance</li>
   </ul>
 
   <p>&gt; Présentation :</p>
   <p>
-    Passionné par la cybersécurité et le hacking web éthique, je réalise des tests sur des environnements de test et participe à des projets bug bounty. Je développe mes compétences techniques sur HTML, CSS, JavaScript, PHP, Python et sur les outils de pentesting tels que Burp Suite et Nmap
+    Passionné par la cybersécurité et le hacking web éthique, je réalise des tests
+    sur des environnements de test et participe à des projets bug bounty.
+    Je développe mes compétences en HTML, CSS, JavaScript, PHP, Python,
+    ainsi que sur des outils de pentesting tels que Burp Suite et Nmap.
   </p>
 
   <p>&gt; Accéder aux autres pages :</p>
