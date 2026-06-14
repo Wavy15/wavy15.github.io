@@ -1,0 +1,85 @@
+<! DOCTYPE html> 
+<HTML lang = "fr">
+<Tête>
+<meta charset="UTF-8">
+<Titre>Write-up</Titre>
+
+<style>
+
+body {
+  background-color: black;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center; 
+  align-items: center;     
+  font-family: "Courier New", monospace;
+  color: #00ff00;
+}
+
+.terminal-box {
+  width: 100vw;       
+  height: 100vh;      
+  border: 2px solid #00ff00;
+  box-shadow: 0 0 20px #00ff00;
+  padding: 20px;      
+  box-sizing: border-box; 
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; 
+}
+
+
+.cursor {
+  display: inline-block;
+  width: 10px;
+  height: 20px;
+  background: #00ff00;
+  margin-left: 5px;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+
+.btn {
+  display: inline-block;
+  margin: 10px 10px 0 0;
+  padding: 10px 20px;
+  color: #00ff00;
+  border: 1px solid #00ff00;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background-color: #00ff00;
+  color: black;
+}
+
+
+ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+li:before {
+  content: "✔ ";
+  color: #00ff00;
+}
+</style>
+</head>
+
+<body>
+
+<div class="terminal-box">
+  <h1>>Choses à retenir pour le test web<Portée Classe="curseur"</Portée></h1>
+  <p>>1-  Observer le pattern ?url=...&h=... dans le code source
+2- Comprendre que h était un MD5 de l'URL
+3- Générer ton propre hash pour n'importe quelle URL
+4- Bypasser la validation complètement</p>
+
