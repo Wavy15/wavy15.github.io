@@ -78,8 +78,13 @@ li:before {
 
 <div class="terminal-box">
   <h1>>Choses à retenir pour le test web<Portée Classe="curseur"</Portée></h1>
-  <p>>1-  Observer le pattern ?url=...&h=... dans le code source
-2- Comprendre que h était un MD5 de l'URL
-3- Générer ton propre hash pour n'importe quelle URL
-4- Bypasser la validation complètement</p>
-
+  <h2> le path traversal web</h2>
+  <p>>1-  Observer le pattern ?url=...&h=... dans le code source /n
+2- Comprendre que h était un MD5 de l'URL /n
+3- Générer ton propre hash pour n'importe quelle URL /n
+4- Bypasser la validation complètement</p> /n
+  <h2> le cache poisonning (théorie)</h2>
+  <p>1- trouver l'endpoint que l'on peut utiliser (souvent un répertoire important du type /account... avec un ficher ensuite (ex: https://0aa300cb034a7beb801303580057000d.web-security-academy.net/my-account/test_2.js)). Pour le trouver, il suffit dee trouver une requête qui va avoir un header avec X-... le grand X signifie que le cache a été atteint.
+  2- envoyer ensuite l'endpoint à la victime en changeant le body par exemple en mettant <script> document.location=endpoint</script>
+  3- rouvrir la requête via burp suite pour vérifier si les données ont changées et si oui, c'est terminé.
+  </p>
