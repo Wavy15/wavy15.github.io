@@ -88,13 +88,13 @@ li:before {
 4- Bypasser la validation complètement</p>
   <h2> le cache poisonning (théorie)</h2>
   <p>1- trouver l'endpoint que l'on peut utiliser (souvent un répertoire important du type /account... avec un ficher ensuite (ex: https://0aa300cb034a7beb801303580057000d.web-security-academy.net/my-account/test_2.js)). Pour le trouver, il suffit de trouver une requête qui va avoir un header avec X-... le grand X signifie que le cache a été atteint. <br>
-  <p> Il est possible de tester la limite du cache en trouvant les délimiteurs par brute force via l'intruder de burp suite. Par exemple, on peut utiliser une url de ce type : https://0a9c0037038917ac804d032900620078.web-security-academy.net/my-account;abcd.js avec le point virgule (;) comme délimiteur.
-  Indices utiles :
-- X-Cache: hit
-- Age:
-- Cache-Control:
-- Via:
-- CF-Cache-Status:
+  <p> Il est possible de tester la limite du cache en trouvant les délimiteurs par brute force via l'intruder de burp suite. Par exemple, on peut utiliser une url de ce type : https://0a9c0037038917ac804d032900620078.web-security-academy.net/my-account;abcd.js avec le point virgule (;) comme délimiteur. <br>
+  Indices utiles : <br>
+- X-Cache: hit <br>
+- Age: <br>
+- Cache-Control: <br>
+- Via: <br>
+- CF-Cache-Status: <br>
   2- envoyer ensuite l'endpoint à la victime en changeant le body par exemple en mettant &lt;script&gt; document.location=endpoint &lt;script&gt; <br>
   3- rouvrir la requête via burp suite pour vérifier si les données ont changées et si oui, c'est terminé.
   </p>
