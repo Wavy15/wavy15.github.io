@@ -85,6 +85,7 @@ li:before {
   <p>>1-  Observer le code source pour trouver une ressource où il y a un ...=... qui peut être utilisé <br>
 2- utiliser des dossiers sensibles comme /etc/passwd pour accéder à ces fichiers <br>
 3- rechercher si cela ne fonctionne pas en remontant l'arborescence à l'aide de ../ <br>
+    il est possible qu'il y ait des restrictions qui s'appliquent pour se protéger du path traversal. On peut alors essayer de doubler les chemins ex : ....// pour que le premier soit supprimé et que le deuxième puisse passer.<br>
 4- Trouver les données sensibles en ayant passé au travers des protections</p>
   <h2> le cache deception (théorie)</h2>
   <p>1- trouver l'endpoint que l'on peut utiliser (souvent un répertoire important du type /account... avec un ficher ensuite (ex: https://0aa300cb034a7beb801303580057000d.web-security-academy.net/my-account/test_2.js)). Pour le trouver, il suffit de trouver une requête qui va avoir un header avec X-... le grand X signifie que le cache a été atteint. <br>
