@@ -100,12 +100,12 @@ li:before {
   3- rouvrir la requête via burp suite pour vérifier si les données ont changées et si oui, c'est terminé.
 <h2> L'injection SQL</h2>
     <h3> L'injection SQL dans les tables accessibles</h3>
-    <p> 1- Trouver la table que l'on veut attaquer (on peut la trouver dans l'URL ex : https://0af000b80407165681110cf800a30022.web-security-academy.net/filter?category=Gifts). Ici la table est products et la colonne est Gifts que l'on peu utiliser à notre avantage.
-        2- On peut rajouter '-- à la fin de l'URL pour tester si il y a des protections ou non
-        3- S'il n'y en a pas, on peut continuer d'attaquer en comprenant comment fonctionne concrètement la table et ses paramètres pour tout avoir et la modifier. Ex : https://insecure-website.com/products?category=Gifts'+OR+1=1-- Va alors donner : SELECT * FROM products WHERE category = 'Gifts' OR 1=1--' AND released = 1.
+    <p> 1- Trouver la table que l'on veut attaquer (on peut la trouver dans l'URL ex : https://0af000b80407165681110cf800a30022.web-security-academy.net/filter?category=Gifts). Ici la table est products et la colonne est Gifts que l'on peu utiliser à notre avantage. <br>
+        2- On peut rajouter '-- à la fin de l'URL pour tester si il y a des protections ou non <br>
+        3- S'il n'y en a pas, on peut continuer d'attaquer en comprenant comment fonctionne concrètement la table et ses paramètres pour tout avoir et la modifier. Ex : https://insecure-website.com/products?category=Gifts'+OR+1=1-- Va alors donner : SELECT * FROM products WHERE category = 'Gifts' OR 1=1--' AND released = 1. <br>
     <h3> L'injection SQL dans les pages de logins</h3>
-      1- On peut utiliser comment fonctionne une page de login à son avantage. Elle fonctionne comme cela : SELECT * FROM users WHERE username = 'wiener' AND password = 'bluecheese'. Elle formule une requête comme cela dans la table des utilisateurs lorsque l'on renseigne un utilisateur avec un mot de passe.
-      2- On peut alors utiliser cela comme ceci : SELECT * FROM users WHERE username = 'administrator'--' AND password = ''. On renseigne alors administrator'--' dans l'utilisateur pour supprimer ce qui se passe ensuite et que la table ne vérifie pas ce qu'elle a comme mot de passe. Il n'y a alors aucun mot de passe renseigné et c'est alors ignoré et on se connecte en tant qu'administrator sans avoir besoin de mot de passe.
+      1- On peut utiliser comment fonctionne une page de login à son avantage. Elle fonctionne comme cela : SELECT * FROM users WHERE username = 'wiener' AND password = 'bluecheese'. Elle formule une requête comme cela dans la table des utilisateurs lorsque l'on renseigne un utilisateur avec un mot de passe. <br>
+      2- On peut alors utiliser cela comme ceci : SELECT * FROM users WHERE username = 'administrator'--' AND password = ''. On renseigne alors administrator'--' dans l'utilisateur pour supprimer ce qui se passe ensuite et que la table ne vérifie pas ce qu'elle a comme mot de passe. Il n'y a alors aucun mot de passe renseigné et c'est alors ignoré et on se connecte en tant qu'administrator sans avoir besoin de mot de passe. <br>
 <section>
   </p>
   <a href="index.html" Class="BTN"> [ Accueil ]</a>
