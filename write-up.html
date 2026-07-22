@@ -101,7 +101,7 @@ li:before {
 <h2> L'injection SQL</h2>
   <p> 1- Trouver la table que l'on veut attaquer (on peut la trouver dans l'URL ex : https://0af000b80407165681110cf800a30022.web-security-academy.net/filter?category=Gifts). Ici la table est products et la colonne est Gifts que l'on peu utiliser à notre avantage.
       2- On peut rajouter '-- à la fin de l'URL pour tester si il y a des protections ou non
-      3- S'il n'y en a pas, on peut continuer d'attaquer en comprenant comment fonctionne concrètement la table et ses paramètres pour tout avoir et la modifier
+      3- S'il n'y en a pas, on peut continuer d'attaquer en comprenant comment fonctionne concrètement la table et ses paramètres pour tout avoir et la modifier. Ex : https://insecure-website.com/products?category=Gifts'+OR+1=1-- Va alors donner : SELECT * FROM products WHERE category = 'Gifts' OR 1=1--' AND released = 1.
 <section>
   </p>
   <a href="index.html" Class="BTN"> [ Accueil ]</a>
