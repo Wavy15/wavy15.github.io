@@ -98,6 +98,10 @@ li:before {
 - CF-Cache-Status: <br>
   2- envoyer ensuite l'endpoint à la victime en changeant le body par exemple en mettant &lt;script&gt; document.location=endpoint &lt;/script&gt; <br>
   3- rouvrir la requête via burp suite pour vérifier si les données ont changées et si oui, c'est terminé.
+<h2> L'injection SQL</h2>
+  <p> 1- Trouver la table que l'on veut attaquer (on peut la trouver dans l'URL ex : https://0af000b80407165681110cf800a30022.web-security-academy.net/filter?category=Gifts). Ici la table est products et la colonne est Gifts que l'on peu utiliser à notre avantage.
+      2- On peut rajouter '-- à la fin de l'URL pour tester si il y a des protections ou non
+      3- S'il n'y en a pas, on peut continuer d'attaquer en comprenant comment fonctionne concrètement la table et ses paramètres pour tout avoir et la modifier
 <section>
   </p>
   <a href="index.html" Class="BTN"> [ Accueil ]</a>
