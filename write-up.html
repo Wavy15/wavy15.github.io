@@ -106,6 +106,25 @@ li:before {
     <h3> L'injection SQL dans les pages de logins</h3>
       1- On peut utiliser comment fonctionne une page de login à son avantage. Elle fonctionne comme cela : SELECT * FROM users WHERE username = 'wiener' AND password = 'bluecheese'. Elle formule une requête comme cela dans la table des utilisateurs lorsque l'on renseigne un utilisateur avec un mot de passe. <br>
       2- On peut alors utiliser cela comme ceci : SELECT * FROM users WHERE username = 'administrator'--' AND password = ''. On renseigne alors administrator'--' dans l'utilisateur pour supprimer ce qui se passe ensuite et que la table ne vérifie pas ce qu'elle a comme mot de passe. Il n'y a alors aucun mot de passe renseigné et c'est alors ignoré et on se connecte en tant qu'administrator sans avoir besoin de mot de passe. <br>
+<h2> Les failles XSS</h2>
+    <h3> La DOM Based XSS</h3>
+      1- chercher l'endpoint qui est vulnérable. <br>
+      C'est souvent de ce type : <br>
+- location.search	?search=test <br>
+- location.hash	#test <br>
+- location.pathname	/user/test <br>
+- location.href	URL complète <br>
+- document.URL	URL complète <br>
+- document.documentURI	URI complète <br>
+- document.referrer	Page précédente <br>
+- window.name	Valeur persistante entre pages <br>
+- localStorage	Données stockées localement <br>
+- sessionStorage	Données de session <br>
+- postMessage()	Messages entre fenêtres <br>
+- WebSocket	Données reçues <br>
+- fetch()	Réponses d'API réinjectées dans le DOM <br>
+    2- Comprendre ensuite comment passer à travers des lignes de code ex : sortir de &lt;img en devant le compléter par un second &gt; pour réussir à sortir du code et éxécuter un script avec une alerte
+    3- Envoyer le payload dans l'URL directement ou bien à travers Burp Suite, mais toujours dans l'URL pour que ce soit toujours une DOM Based XSS qui s'applique directement dans l'URL du navigateur. 
 <section>
   </p>
   <a href="index.html" Class="BTN"> [ Accueil ]</a>
