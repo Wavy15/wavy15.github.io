@@ -143,6 +143,20 @@ li:before {
       6- Vérifier que l'alerte s'affiche — ce qui confirme l'exécution de JS arbitraire côté client, donc le XSS est confirmé.<br>
 
       Impact : vol de session (document.cookie), redirection vers un site malveillant, actions au nom de la victime — tout ce qu'un script peut faire dans le contexte de la page. <br>
+    <h3>Le DOM XSS via jQuery selector sink et événement hashchange</h3>
+      1- Chercher un endpoint où le JS écoute un événement hashchange ($(window).on('hashchange', ...)) et utilise window.location.hash pour construire une chaîne passée à un sink jQuery ($(...)), plutôt qu'un innerHTML classique. <br>
+
+      2- Comprendre le sink $() : si la chaîne qui lui est passée contient une balise HTML (<...>), jQuery peut créer cet élément au lieu de simplement faire une recherche — c'est ce qui rend l'injection possible, même à l'intérieur d'un sélecteur comme :contains(...). <br>
+
+      3- Point clé à retenir : l'événement hashchange ne se déclenche que si le hash change après le chargement initial de la page. Charger directement une URL avec le payload déjà dans le hash (?...#&lt;payload&gt;) ne suffit pas — il faut provoquer un changement de hash après coup. <br>
+
+      4- Pour tester rapidement dans la console du navigateur (sur soi-même) : <br>
+      location.hash = '&lt;img src=x onerror=alert(1)&gt;' <br>
+
+      5- Pour livrer l'exploit à une victime (via le exploit server du lab), utiliser une iframe qui charge la page sans hash, puis modifie son propre src une fois chargée (onload) pour y ajouter le hash malveillant — ce qui déclenche le hashchange à l'intérieur de l'iframe : <br>
+      &lt;iframe src="https://[LAB-ID].web-security-academy.net/" onload="this.src+='#&lt;img src=x onerror=print()&gt;'"&gt;&lt;/iframe&gt; <br>
+
+      Impact : identique aux autres DOM XSS — vol de session, exécution de code arbitraire côté client, actions au nom de la victime — mais avec un vecteur de livraison plus subtil (nécessite de déclencher un événement, pas juste une visite de lien). <br>
 <section>
   </p>
   <a href="index.html" Class="BTN"> [ Accueil ]</a>
