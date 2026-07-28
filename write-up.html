@@ -157,6 +157,20 @@ li:before {
       &lt;iframe src="https://[LAB-ID].web-security-academy.net/" onload="this.src+='#&lt;img src=x onerror=print()&gt;'"&gt;&lt;/iframe&gt; <br>
 
       Impact : identique aux autres DOM XSS — vol de session, exécution de code arbitraire côté client, actions au nom de la victime — mais avec un vecteur de livraison plus subtil (nécessite de déclencher un événement, pas juste une visite de lien). <br>
+
+  <h3>Le XSS réfléchi dans un attribut HTML avec crochets d'angle encodés</h3>
+        1- Repérer un point d'injection où la donnée utilisateur est réinjectée à l'intérieur d'un attribut d'une balise existante (ex : value="TA_DONNEE" d'un &lt;input&gt;), et vérifier si &lt; et &gt; sont encodés en HTML (&lt;, &gt;). Si oui, impossible de créer une nouvelle balise (&lt;img&gt;, &lt;svg&gt;, etc.) — il faut réutiliser la balise déjà présente. <br>
+
+        2- Vérifier si le caractère " (guillemet double) est, lui, encodé ou non. S'il ne l'est pas, il devient le point d'appui de l'attaque : il permet de fermer prématurément l'attribut value existant tout en restant à l'intérieur de la balise. <br>
+        
+        3- Une fois l'attribut value fermé avec ", on est toujours dans la balise → on peut ajouter un nouvel attribut événementiel directement à la suite (séparé par un espace), par exemple onfocus=alert(1). <br>
+        
+        4- Pour déclencher l'événement sans interaction de la victime, ajouter l'attribut booléen autofocus (sans valeur, juste sa présence) qui force le focus automatique dès le chargement de la page → ce qui déclenche onfocus immédiatement. <br>
+        
+        5- Piège à connaître : le serveur ajoute automatiquement un guillemet de fermeture à la fin de l'attribut value d'origine. Ce guillemet parasite se retrouve juste après le payload et casse la syntaxe JS si rien ne l'attend. Solution : terminer le payload par un attribut factice ouvert avec un = suivi d'un guillemet (x=), pour que ce guillemet automatique du serveur vienne le refermer proprement, au lieu de polluer le code JS injecté. <br>
+        
+        Payload final : " autofocus onfocus=alert(1) x= <br>
+        Impact : exécution de JS arbitraire malgré l'encodage des chevrons — montre que l'encodage de </> seul ne suffit pas à protéger un contexte attribut ; il faut aussi encoder les guillemets (" → &quot;) et neutraliser les espaces pour bloquer ce vecteur.<br>
 <section>
   </p>
   <a href="index.html" Class="BTN"> [ Accueil ]</a>
