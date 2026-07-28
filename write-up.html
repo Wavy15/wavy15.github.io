@@ -110,21 +110,39 @@ li:before {
     <h3> La DOM Based XSS</h3>
       1- chercher l'endpoint qui est vulnérable. <br>
       C'est souvent de ce type : <br>
-- location.search	?search=test <br>
-- location.hash	#test <br>
-- location.pathname	/user/test <br>
-- location.href	URL complète <br>
-- document.URL	URL complète <br>
-- document.documentURI	URI complète <br>
-- document.referrer	Page précédente <br>
-- window.name	Valeur persistante entre pages <br>
-- localStorage	Données stockées localement <br>
-- sessionStorage	Données de session <br>
-- postMessage()	Messages entre fenêtres <br>
-- WebSocket	Données reçues <br>
-- fetch()	Réponses d'API réinjectées dans le DOM <br>
-    2- Comprendre ensuite comment passer à travers des lignes de code ex : sortir de &lt;img en devant le compléter par un second &gt; pour réussir à sortir du code et éxécuter un script avec une alerte. On peut aussi utiliser un lien de ce type pour passer à travers le path (arborescence) : https://0a2c004a0481a801827b2fdc007d008e.web-security-academy.net/feedback?returnPath=javascript:alert(document.cookie) <br>
-    3- Envoyer le payload dans l'URL directement ou bien à travers Burp Suite, mais toujours dans l'URL pour que ce soit toujours une DOM Based XSS qui s'applique directement dans l'URL du navigateur. <br>
+      - Inner.html : 
+      - location.search	?search=test <br>
+      - location.hash	#test <br>
+      - location.pathname	/user/test <br>
+      - location.href	URL complète <br>
+      - document.URL	URL complète <br>
+      - document.documentURI	URI complète <br>
+      - document.referrer	Page précédente <br>
+      - window.name	Valeur persistante entre pages <br>
+      - localStorage	Données stockées localement <br>
+      - sessionStorage	Données de session <br>
+      - postMessage()	Messages entre fenêtres <br>
+      - WebSocket	Données reçues <br>
+      - fetch()	Réponses d'API réinjectées dans le DOM <br>
+      2- Comprendre ensuite comment passer à travers des lignes de code ex : sortir de &lt;img en devant le compléter par un second &gt; pour réussir à sortir du code et éxécuter un script avec une alerte. On peut aussi utiliser un lien de ce type pour passer à travers le path (arborescence) : https://0a2c004a0481a801827b2fdc007d008e.web-security-academy.net/feedback?returnPath=javascript:alert(document.cookie) <br>
+      3- Envoyer le payload dans l'URL directement ou bien à travers Burp Suite, mais toujours dans l'URL pour que ce soit toujours une DOM Based XSS qui s'applique directement dans l'URL du navigateur. <br>
+    <h3>Le DOM XSS via location.search et sink innerHTML</h3>
+      1- Chercher dans le code source JS un endpoint qui récupère une donnée depuis l'URL (ex : window.location.search via URLSearchParams) et l'insère ensuite dans le DOM sans validation. <br>
+
+      2- Repérer le sink utilisé pour l'insertion. Si c'est innerHTML, le navigateur interprète le contenu comme du HTML réel — mais un tag &lt;script&gt; ne s'exécute jamais via innerHTML (limitation native du DOM). Il faut donc utiliser une balise qui déclenche du JS via un attribut événementiel. <br>
+
+      3- Utiliser une balise qui charge une ressource externe avec une source volontairement invalide, pour forcer une erreur de chargement et déclencher l'exécution du JS : <br>
+      &lt;img src=x onerror=alert(1)&gt; <br>
+
+      4- Encoder le payload pour l'URL (les espaces, =, etc. doivent être encodés selon le contexte — Burp Suite peut le faire automatiquement via Ctrl+U) : <br>
+      &lt;img+src%3dx+onerror%3d+alert(1)&gt; <br>
+
+      5- Injecter dans le paramètre concerné : <br>
+      https://exemple.web-security-academy.net/?search=&lt;img+src%3dx+onerror%3d+alert(1)&gt; <br>
+
+      6- Vérifier que l'alerte s'affiche — ce qui confirme l'exécution de JS arbitraire côté client, donc le XSS est confirmé.<br>
+
+      Impact : vol de session (document.cookie), redirection vers un site malveillant, actions au nom de la victime — tout ce qu'un script peut faire dans le contexte de la page. <br>
 <section>
   </p>
   <a href="index.html" Class="BTN"> [ Accueil ]</a>
