@@ -171,7 +171,23 @@ li:before {
         
         Payload final : " autofocus onfocus=alert(1) x= <br>
         Impact : exécution de JS arbitraire malgré l'encodage des chevrons — montre que l'encodage de </> seul ne suffit pas à protéger un contexte attribut ; il faut aussi encoder les guillemets (" → &quot;) et neutraliser les espaces pour bloquer ce vecteur.<br>
-<section>
+  <h3>Le XSS stocké dans un attribut href avec guillemets encodés</h3>
+        1- Repérer un point d'injection dans une fonctionnalité de commentaire (donc potentiellement stocké côté serveur, réaffiché à tous les visiteurs, pas juste à toi). Un champ suspect classique : "Website" dans un formulaire de commentaire. <br>
+
+        2- Vérifier le code source généré : si le champ "Website" est réinjecté dans un attribut href d'une balise <a> existante (souvent autour du nom de l'auteur du commentaire), et que les guillemets " sont encodés (&quot;), il est impossible de fermer l'attribut href pour en ajouter un nouveau (contrairement au lab précédent sur l'attribut value). <br>
+        
+        3- Réfléchir au contenu de l'attribut href lui-même plutôt qu'à en sortir : un lien <a> peut utiliser le schéma spécial javascript: au lieu d'une URL classique. Une fois cliqué, le navigateur exécute le code JS qui suit ce schéma, sans avoir besoin d'attribut événementiel ni de guillemets. <br>
+        
+        4- Injecter dans le champ concerné : javascript:alert(1) (attention à bien orthographier "javascript", une faute de frappe empêche l'exécution silencieusement). <br>
+        
+        5- Vérifier dans le code source que le lien généré est bien : &lt;a href="javascript:alert(1)">NomAuteur&lt;/a>. <br>
+        
+        6- Cliquer sur le lien (dans un vrai navigateur, sur la page réelle du lab — pas via Burp Repeater) pour déclencher l'exécution. <br>
+        
+        Piège à connaître : même quand l'alerte s'affiche correctement, le lab peut ne pas se marquer "Solved" immédiatement. Vérifier : navigation sans extensions/bloqueurs, clic sur le bon commentaire (le plus récent, sans faute), puis recharger complètement la page d'accueil du lab. <br>
+        
+        Impact : contrairement aux XSS reflétés (visibles seulement par soi-même), un XSS stocké touche tous les visiteurs de la page — ici, chaque personne qui clique sur le nom de l'auteur du commentaire malveillant exécute le payload, ce qui en fait une vulnérabilité à impact bien plus large (vol de session à grande échelle, defacement, propagation de malware...). <br>
+  <section>
   </p>
   <a href="index.html" Class="BTN"> [ Accueil ]</a>
   <a href="competences.html" Class="BTN"> [ Comptétences ]</a>
