@@ -187,6 +187,27 @@ li:before {
         Piège à connaître : même quand l'alerte s'affiche correctement, le lab peut ne pas se marquer "Solved" immédiatement. Vérifier : navigation sans extensions/bloqueurs, clic sur le bon commentaire (le plus récent, sans faute), puis recharger complètement la page d'accueil du lab. <br>
         
         Impact : contrairement aux XSS reflétés (visibles seulement par soi-même), un XSS stocké touche tous les visiteurs de la page — ici, chaque personne qui clique sur le nom de l'auteur du commentaire malveillant exécute le payload, ce qui en fait une vulnérabilité à impact bien plus large (vol de session à grande échelle, defacement, propagation de malware...). <br>
+
+  <h3>Le XSS réfléchi dans un contexte JavaScript pur (chaîne de caractères)</h3>
+          1- Repérer un point d'injection où la donnée n'est pas insérée dans du HTML classique, mais directement à l'intérieur d'une chaîne de caractères JavaScript (ex : var searchTerms = 'TA_DONNEE';), généralement utilisée ensuite via document.write() ou une autre méthode de construction dynamique du DOM. <br>
+
+          2- Vérifier quels caractères sont filtrés/encodés dans le résultat reflété. Si < et > sont encodés mais que le guillemet correspondant au délimiteur de la chaîne JS (' ici) ne l'est pas, l'injection devient possible directement dans le contexte JS. <br>
+
+          3- Construire le payload en 3 parties : <br> <br>
+
+          -  Un ' pour fermer la chaîne de caractères en cours. <br>
+          -  Un ; pour terminer proprement l'instruction JavaScript en cours. <br>
+          -  Le code à exécuter, suivi de // pour transformer tout le reste de la ligne (le code résiduel du template, comme le ' de fermeture prévu et le ; final) en commentaire JS, afin d'éviter toute erreur de syntaxe qui empêcherait l'exécution. <br>
+
+             Payload final : <br>
+
+            '; alert(1)// <br>
+
+          4- Vérifier dans le code source généré que la structure ressemble bien à : var searchTerms = '...'; alert(1)//...'; — confirmant que ton alert(1) est bien devenu une instruction JS à part entière, isolée du reste par le commentaire. <br>
+
+          Point clé à retenir : contrairement aux contextes HTML (où on cherche à casser une balise ou un attribut), ici on raisonne en syntaxe JavaScript pure — fermeture de chaîne, séparateur d'instructions (;), et commentaire de fin de ligne (//) sont les trois outils clés pour s'évader proprement d'un contexte JS injecté. <br>
+
+          Impact : identique aux autres XSS reflétés — exécution de JS arbitraire dans le navigateur de la victime dès qu'elle clique sur un lien contenant le payload, avec vol de session/cookies, actions en son nom, etc. <br>
   <section>
   </p>
   <a href="index.html" Class="BTN"> [ Accueil ]</a>
