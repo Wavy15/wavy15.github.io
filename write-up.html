@@ -207,7 +207,31 @@ li:before {
 
           Point clé à retenir : contrairement aux contextes HTML (où on cherche à casser une balise ou un attribut), ici on raisonne en syntaxe JavaScript pure — fermeture de chaîne, séparateur d'instructions (;), et commentaire de fin de ligne (//) sont les trois outils clés pour s'évader proprement d'un contexte JS injecté. <br>
 
-          Impact : identique aux autres XSS reflétés — exécution de JS arbitraire dans le navigateur de la victime dès qu'elle clique sur un lien contenant le payload, avec vol de session/cookies, actions en son nom, etc. <br>
+          Impact : identique aux autres XSS reflétés — exécution de JS arbitraire dans le navigateur de la victime dès qu'elle clique sur un lien contenant le payload, avec vol de session/cookies, actions en son nom, etc. <br> 
+<h2>Les failles CSRF</h2>
+   <h3>Le CSRF sur une fonctionnalité sans protection (changement d'email)</h3>
+        1- Intercepter la requête qui modifie une donnée sensible (ici, POST /my-account/change-email) et vérifier l'absence de token CSRF dans le corps de la requête (pas de paramètre type csrf=...). Vérifier aussi qu'il n'y a pas de champ token caché dans le formulaire HTML d'origine. <br>
+
+        2- Construire un formulaire HTML autonome qui reproduit exactement la requête légitime : <br>
+        
+        action = URL exacte de l'endpoint ciblé (attention à bien recopier le chemin exact, ex : /my-account/change-email, pas juste /my-account). <br>
+        method="POST" pour correspondre à la méthode d'origine (contrairement à un &lt;img src=x> qui ne peut faire que du GET). <br>
+        Un &lt;input type="hidden"> pour chaque paramètre du corps de la requête (ici email), avec la valeur choisie par l'attaquant. <br>
+        
+        3- Ajouter un mécanisme d'auto-soumission, pour que la victime n'ait besoin d'aucune interaction : <br>
+        Donner un id au formulaire. <br>
+        Utiliser &lt;body onload="document.getElementById('ID_DU_FORM').submit()"> pour soumettre le formulaire automatiquement dès le chargement de la page. <br>
+        
+        Payload final :
+        &lt;body onload="document.getElementById('csrf-form').submit()"> <br>
+        &lt;form id="csrf-form" action="https://[LAB-ID].web-security-academy.net/my-account/change-email" method="POST"> <br>
+            &lt;input type="hidden" name="email" value="attacker@evil.com"> <br>
+        &lt;/form> <br>
+        &lt;/body> <br>
+        
+        4- Livrer via l'exploit server du lab pour simuler l'envoi à une victime. <br>
+        Point clé à retenir : contrairement au XSS où on injecte du code dans une page vulnérable, ici on héberge la page malveillante ailleurs (chez l'attaquant) — c'est le navigateur de la victime, déjà authentifié sur le site cible (cookie de session valide), qui envoie la requête forgée à son insu, exploitant le fait que les cookies sont automatiquement joints aux requêtes cross-origin en l'absence de protections (token CSRF, SameSite strict). <br>
+        Impact : modification de données sensibles (ici l'email, souvent utilisé ensuite pour un reset de mot de passe → prise de contrôle complète du compte) sans que la victime s'en rende compte. <br>
   <section>
   </p>
   <a href="index.html" Class="BTN"> [ Accueil ]</a>
