@@ -5,7 +5,6 @@
 <title>Accueil</title>
 
 <style>
-/* Reset et style global */
 body {
   margin: 0;
   padding: 0;
@@ -17,7 +16,6 @@ body {
   height: 100vh;
 }
 
-/* Canvas Matrix */
 canvas {
   position: fixed;
   top: 0;
@@ -28,7 +26,6 @@ canvas {
   display: block;
 }
 
-/* Terminal plein écran centré */
 .terminal {
   position: relative;
   z-index: 1;
@@ -38,12 +35,11 @@ canvas {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;  /* centre verticalement */
-  align-items: center;      /* centre horizontalement */
+  justify-content: center; 
+  align-items: center;     
   text-align: center;
 }
 
-/* Curseur clignotant */
 .cursor {
   display: inline-block;
   width: 10px;
@@ -54,7 +50,6 @@ canvas {
 }
 @keyframes blink { 50% { opacity: 0; } }
 
-/* Boutons */
 .btn-container {
   margin-top: 20px;
   display: flex;
@@ -89,7 +84,6 @@ canvas {
 .btn:hover::before { left: 100%; }
 .btn:active { transform: scale(0.95); }
 
-/* Boot screen */
 #boot {
   position: fixed;
   top: 0;
@@ -131,7 +125,6 @@ canvas {
 </div>
 
 <script>
-/* MATRIX EFFECT */
 const canvas = document.getElementById("matrix");
 const ctx = canvas.getContext("2d");
 
@@ -167,7 +160,6 @@ window.addEventListener("resize", () => {
   height = canvas.height = window.innerHeight;
 });
 
-/* BOOT SEQUENCE */
 const bootLines = [
 "[    0.000000] Booting Kali Linux...",
 "[    0.523421] Loading kernel modules...",
@@ -199,7 +191,6 @@ function bootSequence() {
   }
 }
 
-/* TYPING EFFECT */
 const text = "> Accueil";
 let j = 0;
 function typeTitle() {
